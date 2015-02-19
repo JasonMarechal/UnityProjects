@@ -17,10 +17,10 @@ public class Fractal : MonoBehaviour {
 		gameObject.AddComponent<MeshFilter> ().mesh = FMesh;
 		gameObject.AddComponent<MeshRenderer>().material = FMaterial;
 		if (FDepth < FMaxDepth)
-			new GameObject ("Fractal Chaild").AddComponent<Fractal> ().Initialize(this);
+			StartCoroutine (CreateChildren ());
 	}
 
-	private void Initialize(Fractal parParent)
+	private void Initialize(Fractal parParent, Vector3 parDirection, Quaternion parOrientation)
 	{
 		FMesh = parParent.FMesh;
 		FMaterial = parParent.FMaterial;
@@ -30,7 +30,18 @@ public class Fractal : MonoBehaviour {
 
 		transform.parent = parParent.transform;
 		transform.localScale = Vector3.one * FChildScale;
-		transform.localPosition = Vector3.up * (0.5f + 0.5f * FChildScale);
+		transform.localPosition = parDirection * (0.5f + 0.5f * FChildScale);
+		transform.localRotation = parOrientation;
+	}
+
+	private IEnumerator CreateChildren()
+	{
+		yield return new WaitForSeconds(0.5f);
+		new GameObject ("Fractal Chaild").AddComponent<Fractal> ().Initialize(this, Vector3.up, Quaternion.identity);
+		yield return new WaitForSeconds(0.5f);
+		new GameObject ("Fractal Chaild").AddComponent<Fractal> ().Initialize(this, Vector3.right, Quaternion.Euler(0f, 0f, -90f));
+		yield return new WaitForSeconds(0.5f);
+		new GameObject ("Fractal Chaild").AddComponent<Fractal> ().Initialize(this, Vector3.left, Quaternion.Euler(0f, 0f, 90f));
 	}
 	
 	// Update is called once per frame
