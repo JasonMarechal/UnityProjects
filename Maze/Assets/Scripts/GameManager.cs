@@ -2,6 +2,10 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
+
+	public Maze FMazePrefab;
+
+	private Maze FMazeInstance;
 	
 	private void Start () {
 		BeginGame();
@@ -13,7 +17,12 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 	
-	private void BeginGame () {}
+	private void BeginGame () {
+		FMazeInstance = Instantiate (FMazePrefab) as Maze;
+	}
 	
-	private void RestartGame () {}
+	private void RestartGame () {
+		Destroy (FMazeInstance.gameObject);
+		BeginGame ();
+	}
 }
