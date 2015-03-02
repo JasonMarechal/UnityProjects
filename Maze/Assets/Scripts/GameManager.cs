@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
 	
 	private void BeginGame () {
 		FMazeInstance = Instantiate (FMazePrefab) as Maze;
+		FMazeInstance.Generate ();
 	}
 	
 	private void RestartGame () {
