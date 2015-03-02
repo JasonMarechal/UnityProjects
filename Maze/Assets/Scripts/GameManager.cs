@@ -19,10 +19,11 @@ public class GameManager : MonoBehaviour {
 	
 	private void BeginGame () {
 		FMazeInstance = Instantiate (FMazePrefab) as Maze;
-		FMazeInstance.Generate ();
+		StartCoroutine (FMazeInstance.Generate ());
 	}
 	
 	private void RestartGame () {
+		StopAllCoroutines ();
 		Destroy (FMazeInstance.gameObject);
 		BeginGame ();
 	}

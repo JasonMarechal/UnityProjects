@@ -5,11 +5,14 @@ public class Maze : MonoBehaviour {
 	public int FSizeX, FSizeZ;
 	public MazeCell FCellPrefab;
 	private MazeCell[,] FCells;
+	public float FGenerationStepDelay;
 
-	public void Generate() {
+	public IEnumerator Generate() {
+		WaitForSeconds delay = new WaitForSeconds (FGenerationStepDelay);
 		FCells = new MazeCell[FSizeX, FSizeZ];
 		for (int x = 0; x < FSizeX; ++x) {
 			for (int z = 0; z < FSizeZ; ++z) {
+				yield return delay;
 				CreateCell(x, z);
 			}
 		}
