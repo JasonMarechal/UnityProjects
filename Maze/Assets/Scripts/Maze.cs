@@ -2,16 +2,16 @@
 using System.Collections;
 
 public class Maze : MonoBehaviour {
-	public int FSizeX, FSizeZ;
+	public Int2 FSize;
 	public MazeCell FCellPrefab;
 	private MazeCell[,] FCells;
 	public float FGenerationStepDelay;
 
 	public IEnumerator Generate() {
 		WaitForSeconds delay = new WaitForSeconds (FGenerationStepDelay);
-		FCells = new MazeCell[FSizeX, FSizeZ];
-		for (int x = 0; x < FSizeX; ++x) {
-			for (int z = 0; z < FSizeZ; ++z) {
+		FCells = new MazeCell[FSize.FX, FSize.FZ];
+		for (int x = 0; x < FSize.FX; ++x) {
+			for (int z = 0; z < FSize.FZ; ++z) {
 				yield return delay;
 				CreateCell(x, z);
 			}
@@ -24,6 +24,6 @@ public class Maze : MonoBehaviour {
 		FCells [parX, parZ] = newCell;
 		newCell.name = "Maze Cell " + parX + ", " + parZ;
 		newCell.transform.parent = transform;
-		newCell.transform.localPosition = new Vector3 (parX - FSizeX * 0.5f + 0.5f, 0.0f, parZ - FSizeZ * 0.5f + 0.5f);
+		newCell.transform.localPosition = new Vector3 (parX - FSize.FX * 0.5f + 0.5f, 0.0f, parZ - FSize.FZ * 0.5f + 0.5f);
 	}
 }
